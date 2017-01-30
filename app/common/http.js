@@ -259,8 +259,18 @@ define(['plugins/http', 'jquery'],
             getListTable: function (startAt) {
                 var url = "search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()"
                 var requestUrl = getUrl(url);
-                var data = { startAt: startAt}
+                var data = { startAt: startAt }
                 var req = http.get(requestUrl, data);
+                req.fail(proccessFailReq);
+                return req;
+            },
+
+            getTotalPageCount: function () {
+                
+                var url = "search?cql=space=spaceKey%20AND%20type=page"
+
+                var requestUrl = getUrl(url)
+                var req = http.get(requestUrl);
                 req.fail(proccessFailReq);
                 return req;
             }

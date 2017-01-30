@@ -64,3 +64,13 @@ ul, ol{
     width: 16px;
     height: 16px;
 }
+
+.issue-container{
+    width: 320px;
+    overflow: hidden
+}
+
+.list-panel{
+    height: 760px;
+    overflow-y:  scroll
+}

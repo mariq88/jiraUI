@@ -52,33 +52,44 @@
         </tr>
     </tbody>
 </table>-->
+<form class="aui">
+    <!--<div class="field-group">-->
+         <label for="search-summary">Search issues by string summary: 
+        <input id="search" data-bind="value: summaryFilter, valueUpdate: 'afterkeydown'" />
+        <button data-bind="click: filterItems" class="aui-button">Filter summary</button> 
+    <!--<div class="field-group">-->
+</form>
 <section id="content" role="main" class="aui-page-fixed">
     
     <div class="aui-page-panel">
 
             <section class="aui-page-panel-content">
                     <div class="aui-group split-view">
-            <div class="aui-item col-xl-4" style="width: 320px;">
-                <ul class="issue-list" data-bind="foreach: issues">
-                    <li>
-                        <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
-                        <a data-bind="click: $parent.select">
-                            <span data-bind="text: fields.summary"> </span>
-                        </a>
-                    </li>
-                </ul>
-                <ol class="aui-nav aui-nav-pagination" data-bind="foreach: pages">
+            <div class="aui-item col-xl-4 issue-container">
+                <div class="list-panel aui-style-default">
+                    <ul class="issue-list aui-list-truncate" data-bind="foreach: issues">
+                        <li>
+                            <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
+                            <a data-bind="click: $parent.select">
+                                <span data-bind="text: fields.summary"> </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--<ol class="aui-nav aui-nav-pagination" data-bind="foreach: pages">
                     <li class="aui-nav-previous">
-                        <a data-bind="click: pagination(startAt)" href="#">
+                        <a data-bind="click: previousPage(startAt)" href="#">
                             <</a>
                     </li>
                     <li class="aui-nav-selected">1</li>
                     <li><a>2</a></li>
                     <li><a href="">3</a></li>
                     <li class="aui-nav-next"><a href="#">></a></li>
-                </ol>
+                </ol>-->
             </div>
             <div class="list-panel aui-item col-xl-8" data-bind="visible: showDetails">
+                        <span data-bind="text: console.log(showDetails())"></span>
+
                 <div class="aui-page-header-inner">
                     <!-- .aui-page-header-image -->
                     <div class="aui-page-header-image">
@@ -109,7 +120,6 @@
                 <div class="aui-group split-view">
                     <div class="aui-item">
                         <h2 class="toggle-title">Details</h2>
-                        <span data-bind="text: console.log(issueTypeIconUrl)"></span>
                         <ol>
                             <li>
                                 <span>Type: </span>

@@ -6,26 +6,6 @@
         }
         var JiraUI = function (data) {
             var self = this;
-            // this.issues = ko.observableArray([])
-
-
-            // this.name = ko.observable(data.name)
-            // this.fullName = ko.observable(data.fullName);
-            // this.admNumber = ko.observable(data.admNumber);
-            // this.id = ko.observable(data.id);
-            // this.structuralUnitId = ko.observable(data.structuralUnitId);
-            // this.parentId = ko.observable(data.parentId);
-            // this.structuralUnitName = ko.observable(data.structuralUnitName);
-            // this.children = data.children;
-            // this.childrenA = ko.observableArray([]);
-
-
-            // this.editMode = ko.observable(false);
-
-            // this.children.forEach(function (acadStructureSubnodes) {
-            //     var acadSubStruct = new AcademyStructure(acadStructureSubnodes);
-            //     self.childrenA.push(acadSubStruct);
-            // });
 
             this.select = function (data) {
 
@@ -44,11 +24,13 @@
             self.issuePriorityName = ko.observable()
             self.issuePriorityIconUrl = ko.observable()
             self.showDetails = ko.observable(false)
+            self.numberOfPages = ko.observable();
+            self.totalIssueCount = ko.observable()
 
-            self.pages = ko.observable(5)
             self.startAt = ko.observable(0);
 
             self.select = function (item) {
+                debugger
                 self.description(item.fields.description)
                 self.summary(item.fields.summary)
                 self.key(item.key)
@@ -63,63 +45,60 @@
                 console.log(item)
             }
 
-            // this.deleteStructure = function (data) {
-            //     // var promise = Dialog.showMessage(
-            //     //     i18n.t('app:areYouSureYouWantToDelete'),
-            //     //     i18n.t('app:delete'),
-            //     //     [i18n.t('app:yes'), i18n.t('app:cancel')],
-            //     //     true
-            //     // );
+            self.summaryFilter = ko.observable();
 
-            //     promise.then(function (dialogResult) {
-            //         if (dialogResult === true) {
-            //             var req = http.remove('noms/academyStructure/delete/' + data.id());
-
-            //             req.done(function () {
-            //                 // logger.success(i18n.t('app:deleteSuccessful'));
-            //                 window.location.reload();
-
-            //             });
-
-            //             req.fail(function () {
-            //                 // logger.error(i18n.t('app:deleteUsedUnsuccessful'));
-
-            //             });
-            //         }
-            //     });
-            // };
         };
 
         JiraUIVM.prototype = {
             pagination: function (data) {
-                debugger
                 http.getListTable(startAt).then((res) => {
 
                     self.issues(res.issues)
+                    
                     // console.log(that.issues())
                 })
             },
 
             activate: function () {
                 var self = this;
-
                 var maxResults = 20
-                http.getListTable(startAt).then((res) => {
 
+                http.getListTable(self.startAt).then((res) => {
+                     var show_per_page = 50;  
+                     self.totalIssueCount(res.totalCount);
+                     self.numberOfPages(Math.ceil(res.totalCount/maxResults))
+                     debugger
+    // //getting the amount of elements inside content div  
+    // var numberOfIitems = $('#content').children().size();  
+    // //calculate the number of pages we are going to have  
+    // var number_of_pages = Math.ceil(number_of_items/show_per_page);  
+  
                     self.issues(res.issues)
                     // console.log(that.issues())
                 })
+
+                http.getTotalPageCount().then((res) => {
+                    debugger
+                })
+
+            },
+
+            filterItems: function () {
+
+                var self = this
+                debugger
+                var summaryArray = []
+                var filter = self.summaryFilter().toLowerCase();
+                var asd = ko.utils.arrayFilter(self.issues(), function (issue) {
+                    return (issue.fields.summary.toLowerCase().indexOf(filter) > -1);
+                });
+
+                self.issues(asd)
             }
         };
 
         var jiraUIVM = new JiraUIVM();
 
         return jiraUIVM
-
-        //Note: This module exports a function. That means that you, the developer, can create multiple instances.
-        //This pattern is also recognized by Durandal so that it can create instances on demand.
-        //If you wish to create a singleton, you should export an object instead of a function.
-        //See the "flickr" module for an example of object export.
-
 
     });
