@@ -256,10 +256,10 @@ define(['plugins/http', 'jquery'],
                 return req;
             },
 
-            getListTable: function (startAt, maxResults) {
+            getListTable: function (startAt) {
                 var url = "search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()"
                 var requestUrl = getUrl(url);
-                var data = { startAt: startAt, maxResults: maxResults }
+                var data = { startAt: startAt}
                 var req = http.get(requestUrl, data);
                 req.fail(proccessFailReq);
                 return req;

@@ -53,8 +53,8 @@
     </tbody>
 </table>-->
 <section id="content" role="main" class="aui-page-fixed">
+    
     <div class="aui-page-panel">
-        <div class="aui-page-panel-inner">
 
             <section class="aui-page-panel-content">
                     <div class="aui-group split-view">
@@ -67,9 +67,9 @@
                         </a>
                     </li>
                 </ul>
-                <ol class="aui-nav aui-nav-pagination">
+                <ol class="aui-nav aui-nav-pagination" data-bind="foreach: pages">
                     <li class="aui-nav-previous">
-                        <a href="#">
+                        <a data-bind="click: pagination(startAt)" href="#">
                             <</a>
                     </li>
                     <li class="aui-nav-selected">1</li>
@@ -136,7 +136,6 @@
         </div>
             </section>
         </div>
-    </div>
 </section>
 <!--<div class="aui-page-fixed">
     <div class="aui-page-panel">

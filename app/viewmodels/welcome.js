@@ -45,6 +45,9 @@
             self.issuePriorityIconUrl = ko.observable()
             self.showDetails = ko.observable(false)
 
+            self.pages = ko.observable(5)
+            self.startAt = ko.observable(0);
+
             self.select = function (item) {
                 self.description(item.fields.description)
                 self.summary(item.fields.summary)
@@ -88,21 +91,24 @@
         };
 
         JiraUIVM.prototype = {
-            select: function (data) {
-                // if (data !== undefined) {
-                //     this.editMode(true);
-                // }
+            pagination: function (data) {
+                debugger
+                http.getListTable(startAt).then((res) => {
+
+                    self.issues(res.issues)
+                    // console.log(that.issues())
+                })
             },
 
             activate: function () {
                 var self = this;
-                var startAt = 0;
-                var maxResults = 20
-                http.getListTable(startAt, maxResults).then((res) => {
 
-                        self.issues(res.issues)
-                        // console.log(that.issues())
-                    })
+                var maxResults = 20
+                http.getListTable(startAt).then((res) => {
+
+                    self.issues(res.issues)
+                    // console.log(that.issues())
+                })
             }
         };
 
