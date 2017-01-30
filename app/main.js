@@ -8,6 +8,7 @@
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'jquery': '../lib/jquery/jquery-1.9.1',
         'aui': '../lib/aui/js/aui',
+        'http': 'common/http'
     },
     shim: {
         'bootstrap': {

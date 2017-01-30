@@ -1,7 +1,9 @@
-﻿define(['durandal/app', 'plugins/http', 'knockout'],
+﻿define(['durandal/app', 'common/http', 'knockout'],
     function (app, http, ko) {
         'use strict';
+        function getListViewTable(requestUrl, data) {
 
+        }
         var JiraUI = function (data) {
             var self = this;
             // this.issues = ko.observableArray([])
@@ -26,7 +28,7 @@
             // });
 
             this.select = function (data) {
-                debugger
+
             };
         };
 
@@ -94,8 +96,10 @@
 
             activate: function () {
                 var self = this;
-                http.get("https://jira.atlassian.com/rest/api/latest/search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()",
-                    { startAt: 0, maxResults: 20 }).then((res) => {
+                var startAt = 0;
+                var maxResults = 20
+                http.getListTable(startAt, maxResults).then((res) => {
+
                         self.issues(res.issues)
                         // console.log(that.issues())
                     })

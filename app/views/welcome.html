@@ -1,31 +1,92 @@
-﻿<div class="details-layout ">
-    <div class="aui-group split-view">
-        <div class="aui-item col-xl-4" style="width: 320px;">
+﻿<!--<table class="aui">
+    <thead>
+        <tr>
+            <th id="name">Name</th>
+            <th id="type">Type</th>
+            <th id="order">Order</th>
+            <th id="action">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td headers="name">Default</td>
+            <td headers="type">Internal Directory</td>
+            <td class="order" headers="order">
+                <ul class="menu">
+                    <li>
+                        <a class="down" href="#">Down</a>
+                    </li>
+                </ul>
+            </td>
+            <td class="action" headers="action">
+                <ul class="menu">
+                    <li>
+                        <a href="#">An Action</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td headers="name">Corporate LDAP</td>
+            <td headers="type">Microsoft Active Directory</td>
+            <td class="order" headers="order">
+                <ul class="menu">
+                    <li>
+                        <a class="up" href="#">Up</a>
+                    </li>
+                    <li>
+                        <a class="down" href="#">Down</a>
+                    </li>
+                </ul>
+            </td>
+            <td class="action" headers="action">
+                <ul class="menu">
+                    <li>
+                        <a href="#">An Action</a>
+                    </li>
+                    <li>
+                        <a href="#">Another Action</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>-->
+<section id="content" role="main" class="aui-page-fixed">
+    <div class="aui-page-panel">
+        <div class="aui-page-panel-inner">
 
-            <ul class="issue-list" data-bind="foreach: issues">
-                <li>
-                    <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
-                    <a data-bind="click: $parent.select">
-                        <span data-bind="text: fields.summary"> </span>
-                    </a>
-                </li>
-            </ul>
-            <ol class="aui-nav aui-nav-pagination">
-                <li class="aui-nav-previous">
-                    <a href="#">
-                        <</a>
-                </li>
-                <li class="aui-nav-selected">1</li>
-                <li><a>2</a></li>
-                <li><a href="">3</a></li>
-                <li class="aui-nav-next"><a href="#">></a></li>
-            </ol>
+            <section class="aui-page-panel-content">
+                    <div class="aui-group split-view">
+            <div class="aui-item col-xl-4" style="width: 320px;">
+                <ul class="issue-list" data-bind="foreach: issues">
+                    <li>
+                        <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
+                        <a data-bind="click: $parent.select">
+                            <span data-bind="text: fields.summary"> </span>
+                        </a>
+                    </li>
+                </ul>
+                <ol class="aui-nav aui-nav-pagination">
+                    <li class="aui-nav-previous">
+                        <a href="#">
+                            <</a>
+                    </li>
+                    <li class="aui-nav-selected">1</li>
+                    <li><a>2</a></li>
+                    <li><a href="">3</a></li>
+                    <li class="aui-nav-next"><a href="#">></a></li>
+                </ol>
             </div>
             <div class="list-panel aui-item col-xl-8" data-bind="visible: showDetails">
                 <div class="aui-page-header-inner">
-                    <div class="aui-page-header-image"><span id="11460" class="aui-avatar aui-avatar-large aui-avatar-project jira-system-avatar"><span class="aui-avatar-inner"><img id="project-avatar" alt="Uploaded image for project: 'Atlassian Translations'" src="https://jira.atlassian.com/secure/projectavatar?pid=11460&amp;avatarId=10011"></span></span>
-                    </div>
                     <!-- .aui-page-header-image -->
+                    <div class="aui-page-header-image">
+                        <span id="11460" class="aui-avatar aui-avatar-large aui-avatar-project jira-system-avatar">
+                            <span class="aui-avatar-inner"><img id="project-avatar" alt="Uploaded image for project: 'Atlassian Translations'" src="https://jira.atlassian.com/secure/projectavatar?pid=11460&amp;avatarId=10011">
+                            </span>
+                        </span>
+                    </div>
                     <div class="aui-page-header-main">
                         <ol class="aui-nav aui-nav-breadcrumbs" resolved="">
                             <li>
@@ -61,9 +122,7 @@
                                 <span data-bind="text: issuePriorityName"></span>
                             </li>
                         </ol>
-
                     </div>
-
                 </div>
                 <div class="aui-group split-view">
                     <div class="aui-item">
@@ -73,8 +132,14 @@
                     <div class="aui-item">
                     </div>
                 </div>
-
             </div>
         </div>
+            </section>
+        </div>
     </div>
-</div>
+</section>
+<!--<div class="aui-page-fixed">
+    <div class="aui-page-panel">
+    
+    </div>
+</div>-->

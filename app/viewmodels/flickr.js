@@ -42,7 +42,6 @@
             var self = this
             this.description = item.fields.description
             this.summary(item.fields.summary)
-            debugger
             this.key = item.key
             this.issueType = item.fields.issueType //name & iconUrl
             this.issuePriority = item.fields.priority
