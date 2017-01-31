@@ -83,3 +83,7 @@ ul, ol{
     position: relative;
     border-color: #ccc
 }
+
+.aui-expander-content{
+    min-height: 5rem
+}

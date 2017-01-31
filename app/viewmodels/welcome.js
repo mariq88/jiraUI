@@ -1,5 +1,5 @@
-﻿define(['durandal/app', 'common/http', 'knockout'],
-    function (app, http, ko) {
+﻿define(['durandal/app', 'common/http', 'knockout', 'jquery'],
+    function (app, http, ko, $) {
         'use strict'
 
         var JiraUIVM = function () {
@@ -31,8 +31,10 @@
             }
 
             self.pagination = function (index) {
+                AJS.$('.button-spinner').spin()
                 var startAt = 50 * index
                 http.getListTable(startAt).then((res) => {
+                    AJS.$('.button-spinner').spinStop();
                     self.issues(res.issues)
                 })
             }
@@ -49,7 +51,7 @@
                     self.unfilteredArray(res.issues)
                 })
             },
-            
+
             filterItems: function () {
                 var self = this
                 var filter = self.summaryFilter().toLowerCase()
@@ -69,3 +71,4 @@
 
         return jiraUIVM
     })
+

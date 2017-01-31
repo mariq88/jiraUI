@@ -3,6 +3,7 @@
         <input id="search" data-bind="value: summaryFilter, valueUpdate: 'afterkeydown'" />
         <button data-bind="click: filterItems" class="aui-button">Filter by summary</button> 
 </form>
+    <div class="button-spinner"></div>
 <section id="content" role="main" class="aui-page-fixed">
     <div class="aui-page-panel">
             <section class="aui-page-panel-content">
@@ -70,8 +71,11 @@
                         </div>
                         <div class="aui-group split-view">
                             <div class="aui-item">
-                                <h2>Description</h2>
-                                <span data-bind="text: description"></span>
+                                  <h2>Description</h2>
+                                  <div id="expander-with-replace-text-content" class="aui-expander-content">
+                                        <span data-bind="text: description"></span>
+                                    </div>
+                                    <a id="replace-text-trigger" data-replace-text="Show less" class="aui-expander-trigger" aria-controls="expander-with-replace-text-content">Show more</a>
                             </div>
                             <div class="aui-item">
                             </div>
