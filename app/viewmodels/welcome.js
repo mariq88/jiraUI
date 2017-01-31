@@ -7,9 +7,9 @@
         var JiraUI = function (data) {
             var self = this;
 
-            this.select = function (data) {
+            // this.select = function (data) {
 
-            };
+            // };
         };
 
         var JiraUIVM = function () {
@@ -24,7 +24,7 @@
             self.issuePriorityName = ko.observable()
             self.issuePriorityIconUrl = ko.observable()
             self.showDetails = ko.observable(false)
-            self.numberOfPages = ko.observable();
+            self.numberOfPages = ko.observable([]);
             self.totalIssueCount = ko.observable()
 
             self.startAt = ko.observable(0);
@@ -45,40 +45,45 @@
                 console.log(item)
             }
 
+            self.pagination = function (index) {
+                var startAt = 50*index
+                debugger
+                http.getListTable(startAt).then((res) => {
+                    
+                    debugger
+                    http.getListTable(startAt).then((res) => {
+                       
+                        self.issues(res.issues)
+                        // console.log(that.issues())
+                    })
+                    self.issues(res.issues)
+
+                    // console.log(that.issues())
+                })
+            },
+
             self.summaryFilter = ko.observable();
 
         };
 
         JiraUIVM.prototype = {
-            pagination: function (data) {
-                http.getListTable(startAt).then((res) => {
-
-                    self.issues(res.issues)
-                    
-                    // console.log(that.issues())
-                })
-            },
+          
 
             activate: function () {
                 var self = this;
                 var maxResults = 20
 
                 http.getListTable(self.startAt).then((res) => {
-                     var show_per_page = 50;  
-                     self.totalIssueCount(res.totalCount);
-                     self.numberOfPages(Math.ceil(res.totalCount/maxResults))
-                     debugger
-    // //getting the amount of elements inside content div  
-    // var numberOfIitems = $('#content').children().size();  
-    // //calculate the number of pages we are going to have  
-    // var number_of_pages = Math.ceil(number_of_items/show_per_page);  
-  
+                    var show_per_page = 50;
+                    self.totalIssueCount(res.totalCount);
+                    var asdf = Math.ceil(res.total / res.maxResults)
+                    self.numberOfPages(asdf)
                     self.issues(res.issues)
                     // console.log(that.issues())
                 })
 
                 http.getTotalPageCount().then((res) => {
-                    debugger
+
                 })
 
             },
