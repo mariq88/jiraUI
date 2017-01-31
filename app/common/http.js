@@ -44,8 +44,8 @@ define(['plugins/http', 'jquery'],
 
         return {
             getListTable: function (startAt) {
-                var url = "search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()"
-                var requestUrl = getUrl(url);
+                const JQL = "search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()"
+                var requestUrl = getUrl(JQL);
                 var data = { startAt: startAt }
                 var req = http.get(requestUrl, data);
                 return req;

@@ -7,7 +7,6 @@
         'knockout': '../lib/knockout/knockout-3.4.0',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'jquery': '../lib/jquery/jquery-1.9.1',
-        'aui': '../lib/aui/js/aui',
         'http': 'common/http'
     },
     shim: {
@@ -19,7 +18,7 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap', 'aui'],  function (system, app, viewLocator) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap'],  function (system, app, viewLocator) {
     //>>excludeStart("build", true);
     system.debug(true);
     //>>excludeEnd("build");

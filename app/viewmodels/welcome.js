@@ -19,22 +19,30 @@
             self.startAt = ko.observable(0)
             self.unfilteredArray = ko.observable()
 
-            self.selectIssue = function (item) {
+            self.selectIssue = function (item, showDetails) {
                 self.description(item.fields.description)
                 self.summary(item.fields.summary)
                 self.key(item.key)
                 self.issueTypeName(item.fields.issuetype.name)
                 self.issueTypeIconUrl(item.fields.issuetype.iconUrl)
-                self.issuePriorityName(item.fields.priority.name)
-                self.issuePriorityIconUrl(item.fields.priority.iconUrl)
-                self.showDetails(true)
+
+                if (item.fields.priority) {
+                    self.issuePriorityName(item.fields.priority.name)
+                    self.issuePriorityIconUrl(item.fields.priority.iconUrl)
+                }
+                showDetails === false ? self.showDetails(showDetails) : self.showDetails(true)
             }
 
             self.pagination = function (index) {
                 AJS.$('.button-spinner').spin()
                 var startAt = 50 * index
                 http.getListTable(startAt).then((res) => {
-                    AJS.$('.button-spinner').spinStop();
+                    AJS.$('.button-spinner').spinStop()
+                    var showDetails = false
+                    if (self.showDetails()) {
+                        showDetails = true
+                    }
+                    self.selectIssue(res.issues[0], showDetails)
                     self.issues(res.issues)
                 })
             }
