@@ -18,7 +18,7 @@
             self.numberOfPages = ko.observable([])
             self.summaryFilter = ko.observable()
             self.startAt = ko.observable(0)
-            self.activePage = ko.observable(0);
+            self.activePage = ko.observable(0)
             self.unfilteredArray = []
 
             self.selectIssue = function (item, showDetails) {
