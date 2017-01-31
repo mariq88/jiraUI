@@ -15,11 +15,9 @@
             self.issuePriorityIconUrl = ko.observable()
             self.showDetails = ko.observable(false)
             self.numberOfPages = ko.observable([])
-            self.totalIssueCount = ko.observable()
             self.summaryFilter = ko.observable()
             self.startAt = ko.observable(0)
             self.unfilteredArray = ko.observable()
-            self.filterButtonText = ko.observable("Filter by summary")
 
             self.selectIssue = function (item) {
                 self.description(item.fields.description)
@@ -43,16 +41,13 @@
         JiraUIVM.prototype = {
             activate: function () {
                 var self = this
-                var maxResults = 50
 
                 http.getListTable(self.startAt).then((res) => {
-                    self.totalIssueCount(res.totalCount)
                     var pageCount = Math.ceil(res.total / res.maxResults)
                     self.numberOfPages(pageCount)
                     self.issues(res.issues)
                     self.unfilteredArray(res.issues)
                 })
-
             },
             
             filterItems: function () {

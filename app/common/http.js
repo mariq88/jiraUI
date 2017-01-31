@@ -27,60 +27,22 @@ if (typeof Object.assign != 'function') {
 
 define(['plugins/http', 'jquery'],
     function (http, $) {
-        'use strict';
-
-        var TIMEOUT = 30000;
-        var userInfoUrl = 'account/userinfo';
+        'use strict'
 
         var httpServiceApiLinks = "https://jira.atlassian.com/rest/api/latest/"
 
-        var requestsCount = 0;
-        var _queryTimeout = undefined;
-        var loadingMaskDelay = 200;
-        var resetLoadingMaskTimer;
-
         var getUrl = function (url, host) {
-            var requestUrl;
+            var requestUrl
             if (host) {
-                requestUrl = host + url;
+                requestUrl = host + url
             } else {
-                requestUrl = httpServiceApiLinks + url;
+                requestUrl = httpServiceApiLinks + url
             }
-
+            
             return requestUrl;
         }
 
         return {
-            post: function (url, data, host) {
-                var requestUrl = getUrl(url, host);
-                var req = http.post(requestUrl, data);
-
-                return req;
-            },
-            get: function (url, data, host) {
-                var requestUrl = getUrl(url, host);
-                var req = http.get(requestUrl, data);
-
-                return req;
-            },
-            put: function (url, data, host) {
-                var requestUrl = getUrl(url, host);
-                var req = http.put(requestUrl, data);
-                return req;
-            },
-            remove: function (url, data, host) {
-                var requestUrl = getUrl(url, host);
-                var req = $.ajax({
-                    type: 'DELETE',
-                    url: requestUrl,
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    traditional: true,
-                    data: JSON.stringify(data)
-                });
-                return req;
-            },
-
             getListTable: function (startAt) {
                 var url = "search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()"
                 var requestUrl = getUrl(url);
