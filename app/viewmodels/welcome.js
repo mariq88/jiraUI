@@ -1,38 +1,10 @@
-﻿define(['durandal/app', 'plugins/http', 'knockout'],
+﻿define(['durandal/app', 'common/http', 'knockout'],
     function (app, http, ko) {
-        'use strict';
-
-        var JiraUI = function (data) {
-            var self = this;
-            // this.issues = ko.observableArray([])
-
-
-            // this.name = ko.observable(data.name)
-            // this.fullName = ko.observable(data.fullName);
-            // this.admNumber = ko.observable(data.admNumber);
-            // this.id = ko.observable(data.id);
-            // this.structuralUnitId = ko.observable(data.structuralUnitId);
-            // this.parentId = ko.observable(data.parentId);
-            // this.structuralUnitName = ko.observable(data.structuralUnitName);
-            // this.children = data.children;
-            // this.childrenA = ko.observableArray([]);
-
-
-            // this.editMode = ko.observable(false);
-
-            // this.children.forEach(function (acadStructureSubnodes) {
-            //     var acadSubStruct = new AcademyStructure(acadStructureSubnodes);
-            //     self.childrenA.push(acadSubStruct);
-            // });
-
-            this.select = function (data) {
-                debugger
-            };
-        };
+        'use strict'
 
         var JiraUIVM = function () {
-            var self = this;
-            self.issues = ko.observableArray([]);
+            var self = this
+            self.issues = ko.observableArray([])
             self.description = ko.observable()
             self.summary = ko.observable()
             self.key = ko.observable()
@@ -42,6 +14,10 @@
             self.issuePriorityName = ko.observable()
             self.issuePriorityIconUrl = ko.observable()
             self.showDetails = ko.observable(false)
+            self.numberOfPages = ko.observable([])
+            self.totalIssueCount = ko.observable()
+            self.summaryFilter = ko.observable()
+            self.startAt = ko.observable(0)
 
             self.select = function (item) {
                 self.description(item.fields.description)
@@ -55,61 +31,43 @@
                 self.issuePriorityIconUrl(item.fields.priority.iconUrl)
 
                 self.showDetails(true)
-                console.log(item)
             }
 
-            // this.deleteStructure = function (data) {
-            //     // var promise = Dialog.showMessage(
-            //     //     i18n.t('app:areYouSureYouWantToDelete'),
-            //     //     i18n.t('app:delete'),
-            //     //     [i18n.t('app:yes'), i18n.t('app:cancel')],
-            //     //     true
-            //     // );
+            self.pagination = function (index) {
+                var startAt = 50 * index
+                http.getListTable(startAt).then((res) => {
+                    self.issues(res.issues)
+                })
+            }
 
-            //     promise.then(function (dialogResult) {
-            //         if (dialogResult === true) {
-            //             var req = http.remove('noms/academyStructure/delete/' + data.id());
-
-            //             req.done(function () {
-            //                 // logger.success(i18n.t('app:deleteSuccessful'));
-            //                 window.location.reload();
-
-            //             });
-
-            //             req.fail(function () {
-            //                 // logger.error(i18n.t('app:deleteUsedUnsuccessful'));
-
-            //             });
-            //         }
-            //     });
-            // };
-        };
+        }
 
         JiraUIVM.prototype = {
-            select: function (data) {
-                // if (data !== undefined) {
-                //     this.editMode(true);
-                // }
+            activate: function () {
+                var self = this
+                var maxResults = 20
+
+                http.getListTable(self.startAt).then((res) => {
+                    var show_per_page = 50
+                    self.totalIssueCount(res.totalCount)
+                    var asdf = Math.ceil(res.total / res.maxResults)
+                    self.numberOfPages(asdf)
+                    self.issues(res.issues)
+                })
             },
 
-            activate: function () {
-                var self = this;
-                http.get("https://jira.atlassian.com/rest/api/latest/search?jql=issuetype%20in%20(Bug%2C%20Documentation%2C%20Enhancement)%20and%20updated%20%3E%20startOfWeek()",
-                    { startAt: 0, maxResults: 20 }).then((res) => {
-                        self.issues(res.issues)
-                        // console.log(that.issues())
-                    })
-            }
-        };
+            filterItems: function () {
+                var self = this
+                var filter = self.summaryFilter().toLowerCase()
+                var asd = ko.utils.arrayFilter(self.issues(), function (issue) {
+                    return (issue.fields.summary.toLowerCase().indexOf(filter) > -1)
+                })
 
-        var jiraUIVM = new JiraUIVM();
+                self.issues(asd)
+            }
+        }
+
+        var jiraUIVM = new JiraUIVM()
 
         return jiraUIVM
-
-        //Note: This module exports a function. That means that you, the developer, can create multiple instances.
-        //This pattern is also recognized by Durandal so that it can create instances on demand.
-        //If you wish to create a singleton, you should export an object instead of a function.
-        //See the "flickr" module for an example of object export.
-
-
-    });
+    })

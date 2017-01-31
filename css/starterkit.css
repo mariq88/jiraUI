@@ -60,7 +60,30 @@ ul, ol{
     list-style: none;
 }
 
+.aui-nav a{
+    cursor: pointer;
+}
+
 .priority{
     width: 16px;
     height: 16px;
+}
+
+.issue-container{
+    width: 320px;
+    overflow: hidden
+}
+
+.list-panel{
+    height: 760px;
+    overflow-y:  scroll
+}
+
+.issue-list li{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    cursor: pointer;
+    padding: 5px 0 5px 5px;
+    position: relative;
+    border-color: #ccc
 }
