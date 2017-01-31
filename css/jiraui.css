@@ -87,3 +87,8 @@ ul, ol{
 .aui-expander-content{
     min-height: 5rem
 }
+
+.aui-nav-selected a{
+    color: #333;
+    font-weight: bold
+}

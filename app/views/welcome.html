@@ -20,7 +20,7 @@
                             </ul>
                         </div>
                         <ol class="aui-nav aui-nav-pagination" data-bind="foreach: new Array(numberOfPages())">
-                            <li data-bind="click:  $parent.pagination.bind($data, $index()), css: { aui-nav-selected: $parent.activePage() === $index() }"  >          
+                            <li data-bind="click:  $parent.pagination.bind($data, $index()), css: { 'aui-nav-selected': $parent.activePage() === $index() }"  >          
                                 <a href="#" data-bind='text: $index()+1'> </a>
                             </li>
                         </ol>
