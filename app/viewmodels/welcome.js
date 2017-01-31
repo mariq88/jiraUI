@@ -18,18 +18,17 @@
             self.totalIssueCount = ko.observable()
             self.summaryFilter = ko.observable()
             self.startAt = ko.observable(0)
+            self.unfilteredArray = ko.observable()
+            self.filterButtonText = ko.observable("Filter by summary")
 
-            self.select = function (item) {
+            self.selectIssue = function (item) {
                 self.description(item.fields.description)
                 self.summary(item.fields.summary)
                 self.key(item.key)
-
                 self.issueTypeName(item.fields.issuetype.name)
-                self.issueTypeIconUrl(item.fields.issuetype.iconUrl) //name & iconUrl                 //name & iconUrl
-
+                self.issueTypeIconUrl(item.fields.issuetype.iconUrl)
                 self.issuePriorityName(item.fields.priority.name)
                 self.issuePriorityIconUrl(item.fields.priority.iconUrl)
-
                 self.showDetails(true)
             }
 
@@ -39,31 +38,35 @@
                     self.issues(res.issues)
                 })
             }
-
         }
 
         JiraUIVM.prototype = {
             activate: function () {
                 var self = this
-                var maxResults = 20
+                var maxResults = 50
 
                 http.getListTable(self.startAt).then((res) => {
-                    var show_per_page = 50
                     self.totalIssueCount(res.totalCount)
-                    var asdf = Math.ceil(res.total / res.maxResults)
-                    self.numberOfPages(asdf)
+                    var pageCount = Math.ceil(res.total / res.maxResults)
+                    self.numberOfPages(pageCount)
                     self.issues(res.issues)
+                    self.unfilteredArray(res.issues)
                 })
-            },
 
+            },
+            
             filterItems: function () {
                 var self = this
                 var filter = self.summaryFilter().toLowerCase()
-                var asd = ko.utils.arrayFilter(self.issues(), function (issue) {
-                    return (issue.fields.summary.toLowerCase().indexOf(filter) > -1)
-                })
-
-                self.issues(asd)
+                var temArr = [];
+                if (filter) {
+                    var filteredIssues = ko.utils.arrayFilter(self.unfilteredArray(), function (issue) {
+                        return (issue.fields.summary.toLowerCase().indexOf(filter) > -1)
+                    })
+                    self.issues(filteredIssues)
+                } else {
+                    self.issues(self.unfilteredArray())
+                }
             }
         }
 

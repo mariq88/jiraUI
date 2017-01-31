@@ -1,105 +1,85 @@
 ﻿<form class="aui">
-    <!--<div class="field-group">-->
-         <label for="search-summary">Search issues by summary string: 
+    <label for="search-summary">Search issues by summary string: 
         <input id="search" data-bind="value: summaryFilter, valueUpdate: 'afterkeydown'" />
-        <button data-bind="click: filterItems" class="aui-button">Filter by summary</button> 
-    <!--<div class="field-group">-->
+        <button data-bind="click: filterItems, text: filterButtonText" class="aui-button">Filter by summary</button> 
+
 </form>
 <section id="content" role="main" class="aui-page-fixed">
-    
     <div class="aui-page-panel">
-
             <section class="aui-page-panel-content">
-                    <div class="aui-group split-view">
-            <div class="aui-item col-xl-4 issue-container">
-                <div class="list-panel aui-style-default ">
-                    <ul class="issue-list aui-list-truncate" data-bind="foreach: issues">
-                        <li data-bind="click: $parent.select">
-                            <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
-                            <a >
-                                <span data-bind="text: fields.summary"> </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <ul class="aui-nav aui-nav-pagination">
-                     <li class="aui-nav-previous">
-                        <a href="#">
-                            <</a>
-                    </li>
-                    <li   data-bind="foreach: new Array(numberOfPages())">
-                        <a href="#" data-bind='text: $index()+1, click:  $parent.pagination.bind($data, $index())' class="aui-nav-selected"> </a>
-                    </li>
-                    <li class="aui-nav-previous">
-                        <a href="#">
-                            ></a>
-                    </li>
-                </ul> 
-         
-                <!--<ul class="aui-nav aui-nav-pagination" data-bind="foreach: numberOfPages">
-
-                    <!--<li class="aui-nav-selected">1</li>
-                    <li><a>2</a></li>
-                    <li><a href="">3</a></li>
-                    <li class="aui-nav-next"><a href="#">></a></li>
-                </ul>-->
-            </div>
-            <div class="list-panel aui-item col-xl-8" data-bind="visible: showDetails">
-
-                <div class="aui-page-header-inner">
-                    <!-- .aui-page-header-image -->
-                    <div class="aui-page-header-image">
-                        <span id="11460" class="aui-avatar aui-avatar-large aui-avatar-project jira-system-avatar">
-                            <span class="aui-avatar-inner"><img id="project-avatar" alt="Uploaded image for project: 'Atlassian Translations'" src="https://jira.atlassian.com/secure/projectavatar?pid=11460&amp;avatarId=10011">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="aui-page-header-main">
-                        <ol class="aui-nav aui-nav-breadcrumbs" resolved="">
-                            <li>
-                                <a id="project-name-val">Atlassian Translations</a>
-                            </li>
-                            <li>
-                                <a class="issue-link" data-bind="attr: {href: 'https://jira.atlassian.com/browse/' + key()}">
-                                    <span data-bind="text: key()">  </span>
-                                </a>
-                            </li>
-                        </ol>
-                        <h1 data-bind="text: summary"></h1>
-                    </div>
-                    <!-- .aui-page-header-main -->
-                    <div class="aui-page-header-actions">
-                        <div id="issue-header-pager"></div>
-                    </div>
-                    <!-- .aui-page-header-actions -->
-                </div>
                 <div class="aui-group split-view">
-                    <div class="aui-item">
-                        <h2 class="toggle-title">Details</h2>
-                        <ol>
-                            <li>
-                                <span>Type: </span>
-                                <img data-bind="attr: {src: issueTypeIconUrl}" />
-                                <span data-bind="text: issueTypeName"></span>
+                    <div class="aui-item col-xl-4 issue-container">
+                        <div class="list-panel aui-style-default ">
+                            <ul class="issue-list aui-list-truncate" data-bind="foreach: issues">
+                                <li data-bind="click: $parent.selectIssue">                                        
+                                    <img data-bind="attr: {src: fields.issuetype.iconUrl}" />
+                                    <a >
+                                        <span data-bind="text: fields.summary"> </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="aui-nav aui-nav-pagination">
+                            <li   data-bind="foreach: new Array(numberOfPages())">
+                                <a href="#" data-bind='text: $index()+1, click:  $parent.pagination.bind($data, $index())' class="aui-nav-selected"> </a>
                             </li>
-                            <li>
-                                <span>Priority: </span>
-                                <img  data-bind="attr: {src: issuePriorityIconUrl}" class="priority"/>
-                                <span data-bind="text: issuePriorityName"></span>
-                            </li>
-                        </ol>
+                        </ul>
+                    </div>
+                    <div class="list-panel aui-item col-xl-8" data-bind="visible: showDetails">
+
+                        <div class="aui-page-header-inner">
+                            <!-- .aui-page-header-image -->
+                            <div class="aui-page-header-image">
+                                <span id="11460" class="aui-avatar aui-avatar-large aui-avatar-project jira-system-avatar">
+                                    <span class="aui-avatar-inner"><img id="project-avatar" alt="Uploaded image for project: 'Atlassian Translations'" src="https://jira.atlassian.com/secure/projectavatar?pid=11460&amp;avatarId=10011">
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="aui-page-header-main">
+                                <ol class="aui-nav aui-nav-breadcrumbs" resolved="">
+                                    <li>
+                                        <a id="project-name-val">Atlassian Translations</a>
+                                    </li>
+                                    <li>
+                                        <a class="issue-link" data-bind="attr: {href: 'https://jira.atlassian.com/browse/' + key()}">
+                                            <span data-bind="text: key()">  </span>
+                                        </a>
+                                    </li>
+                                </ol>
+                                <h1 data-bind="text: summary"></h1>
+                            </div>
+                            <div class="aui-page-header-actions">
+                                <div id="issue-header-pager"></div>
+                            </div>
+                        </div>
+                        <div class="aui-group split-view">
+                            <div class="aui-item">
+                                <h2 class="toggle-title">Details</h2>
+                                <ol>
+                                    <li>
+                                        <span>Type: </span>
+                                        <img data-bind="attr: {src: issueTypeIconUrl}" />
+                                        <span data-bind="text: issueTypeName"></span>
+                                    </li>
+                                    <li>
+                                        <span>Priority: </span>
+                                        <img  data-bind="attr: {src: issuePriorityIconUrl}" class="priority"/>
+                                        <span data-bind="text: issuePriorityName"></span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="aui-group split-view">
+                            <div class="aui-item">
+                                <h2>Description</h2>
+                                <span data-bind="text: description"></span>
+                            </div>
+                            <div class="aui-item">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="aui-group split-view">
-                    <div class="aui-item">
-                        <h2>Description</h2>
-                        <span data-bind="text: description"></span>
-                    </div>
-                    <div class="aui-item">
-                    </div>
-                </div>
-            </div>
-        </div>
             </section>
         </div>
+    </div>
 </section>

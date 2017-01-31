@@ -48,10 +48,6 @@ section {
     visibility: visible;
 }
 
-.pictureDetail {
-    max-width: 425px;
-}
-
 a:hover{
     cursor: pointer;
 }
