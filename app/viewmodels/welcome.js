@@ -1,6 +1,7 @@
 ﻿define(['durandal/app', 'common/http', 'knockout', 'jquery'],
     function (app, http, ko, $) {
         'use strict'
+        const RESULT_COUNT = 50
 
         var JiraUIVM = function () {
             var self = this
@@ -17,7 +18,8 @@
             self.numberOfPages = ko.observable([])
             self.summaryFilter = ko.observable()
             self.startAt = ko.observable(0)
-            self.unfilteredArray = ko.observable()
+            self.activePage = ko.observable();
+            self.unfilteredArray = []
 
             self.selectIssue = function (item, showDetails) {
                 self.description(item.fields.description)
@@ -30,12 +32,13 @@
                     self.issuePriorityName(item.fields.priority.name)
                     self.issuePriorityIconUrl(item.fields.priority.iconUrl)
                 }
+                
                 showDetails === false ? self.showDetails(showDetails) : self.showDetails(true)
             }
 
             self.pagination = function (index) {
                 AJS.$('.button-spinner').spin()
-                var startAt = 50 * index
+                var startAt = RESULT_COUNT * index
                 http.getListTable(startAt).then((res) => {
                     AJS.$('.button-spinner').spinStop()
                     var showDetails = false
@@ -43,6 +46,8 @@
                         showDetails = true
                     }
                     self.selectIssue(res.issues[0], showDetails)
+                    self.activePage(index)
+                    self.unfilteredArray = res.issues
                     self.issues(res.issues)
                 })
             }
@@ -56,7 +61,7 @@
                     var pageCount = Math.ceil(res.total / res.maxResults)
                     self.numberOfPages(pageCount)
                     self.issues(res.issues)
-                    self.unfilteredArray(res.issues)
+                    self.unfilteredArray = res.issues
                 })
             },
 
@@ -65,12 +70,12 @@
                 var filter = self.summaryFilter().toLowerCase()
                 var temArr = [];
                 if (filter) {
-                    var filteredIssues = ko.utils.arrayFilter(self.unfilteredArray(), function (issue) {
+                    var filteredIssues = ko.utils.arrayFilter(self.unfilteredArray, function (issue) {
                         return (issue.fields.summary.toLowerCase().indexOf(filter) > -1)
                     })
                     self.issues(filteredIssues)
                 } else {
-                    self.issues(self.unfilteredArray())
+                    self.issues(self.unfilteredArray)
                 }
             }
         }

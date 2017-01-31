@@ -19,11 +19,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <ul class="aui-nav aui-nav-pagination">
-                            <li   data-bind="foreach: new Array(numberOfPages())">
-                                <a href="#" data-bind='text: $index()+1, click:  $parent.pagination.bind($data, $index())' class="aui-nav-selected"> </a>
+                        <ol class="aui-nav aui-nav-pagination" data-bind="foreach: new Array(numberOfPages())">
+                            <li data-bind="click:  $parent.pagination.bind($data, $index()), css: { aui-nav-selected: $parent.activePage() === $index() }"  >          
+                                <a href="#" data-bind='text: $index()+1'> </a>
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <div class="list-panel aui-item col-xl-8" data-bind="visible: showDetails">
 
